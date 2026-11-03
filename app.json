@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "PetConnect",
+    "slug": "petconnect",
+    "scheme": "petconnect",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "br.usp.icmc.petconnect"
+    },
+    "android": {
+      "package": "br.usp.icmc.petconnect",
+      "adaptiveIcon": {
+        "backgroundColor": "#2F4B73",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#FFFFFF"
+        }
+      ]
+    ]
+  }
+}
