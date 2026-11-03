@@ -38,19 +38,19 @@ internet:
 npx expo start --tunnel
 ```
 
-O túnel exige estar logado **na mesma conta Expo** no computador e no Expo Go. Sem isso, o iPhone mostra o erro
-"You need to be signed in to Expo Go and Expo CLI to open your project". Faça isso uma vez:
+O túnel exige estar logado **na mesma conta Expo** no computador e no Expo Go, seja no Android ou no iPhone. Sem isso,
+o Expo Go mostra o erro "You need to be signed in to Expo Go and Expo CLI to open your project". Faça isso uma vez:
 
 1. **No computador:** `npx expo login --no-browser` (pede usuário ou e-mail e senha no terminal). Confira com
    `npx expo whoami`. No Windows, o `npx expo login` sem a opção `--no-browser` pode quebrar ao tentar abrir o
    navegador. Isso é um bug do Expo CLI.
-2. **No celular:** abra o Expo Go, toque no ícone de perfil e entre com a mesma conta.
+2. **No celular (Android ou iPhone):** abra o Expo Go, toque no ícone de perfil e entre com a mesma conta.
 
 Se a sua conta Expo foi criada pelo Google e não tem senha, crie uma em https://expo.dev/login →
 **"Forgot password?"**, usando o e-mail do Google. A conta continua a mesma.
 
 Alternativa sem o túnel do Expo: `npx expo start --tunnel ngrok` usa o ngrok, que já está nas dependências do projeto
-(`@expo/ngrok`). No iPhone, o login no Expo Go continua sendo necessário.
+(`@expo/ngrok`). O login no Expo Go e no computador continua sendo necessário.
 
 ### Outros comandos
 
