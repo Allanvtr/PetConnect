@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { KeyboardAvoidingView, Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useOngUnreadTotal } from '../data/store';
 import { colors } from '../theme/colors';
 import { IconBack, IconChat, IconDoc, IconGrid, IconHome, IconPaw, IconPeople, IconUser } from './Icons';
 import { T } from './Text';
@@ -106,13 +107,14 @@ const ongTabs: NavItem[] = [
   { key: 'painel', to: '/painel', label: 'Painel', icon: IconGrid },
   { key: 'animais', to: '/painel/animais', label: 'Animais', icon: IconPaw },
   { key: 'candidatos', to: '/painel/candidatos', label: 'Candidatos', icon: IconPeople },
-  { key: 'chat', to: '/chat', label: 'Chat', icon: IconChat },
+  { key: 'chat', to: '/painel/chat', label: 'Chat', icon: IconChat },
 ];
 
 export function BottomNav({ variant, active }: { variant: 'adotante' | 'ong'; active: string }) {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const tabs = variant === 'ong' ? ongTabs : adopterTabs;
+  const unread = useOngUnreadTotal();
   return (
     <View style={[styles.nav, { paddingBottom: Math.max(11, insets.bottom) }]} accessibilityRole="tablist">
       {tabs.map((t) => {
@@ -129,7 +131,14 @@ export function BottomNav({ variant, active }: { variant: 'adotante' | 'ong'; ac
             }}
             style={styles.navItem}
           >
-            <Icon color={on ? colors.navy : colors.muted} />
+            <View>
+              <Icon color={on ? colors.navy : colors.muted} />
+              {variant === 'ong' && t.key === 'chat' && unread > 0 && (
+                <View accessible accessibilityLabel={`${unread} mensagens não lidas`} style={styles.badge}>
+                  <T style={styles.badgeText}>{unread}</T>
+                </View>
+              )}
+            </View>
             <T style={[styles.navLabel, { color: on ? colors.navy : colors.muted, fontWeight: on ? '700' : '500' }]}>
               {t.label}
             </T>
@@ -213,6 +222,21 @@ const styles = StyleSheet.create({
   },
   navItem: { flex: 1, alignItems: 'center', gap: 3, paddingTop: 9, minHeight: 56 },
   navLabel: { fontSize: 11 },
+  badge: {
+    position: 'absolute',
+    top: -4,
+    right: -10,
+    minWidth: 16,
+    height: 16,
+    paddingHorizontal: 4,
+    borderRadius: 8,
+    borderWidth: 1.5,
+    borderColor: colors.white,
+    backgroundColor: colors.navy,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  badgeText: { fontSize: 10, fontWeight: '700', color: colors.white },
   overlay: { flex: 1, backgroundColor: colors.overlay },
   overlayCenter: { alignItems: 'center', justifyContent: 'center', padding: 24 },
   overlaySheet: { justifyContent: 'flex-end' },

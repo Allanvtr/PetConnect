@@ -2,7 +2,7 @@
 
 Protótipo interativo do PetConnect (app de adoção responsável) como **aplicativo nativo** para Android e iOS, feito com
 **React Native + TypeScript** sobre o **Expo (SDK 58)** e o **Expo Router**.
-As 14 telas reproduzem o protótipo de média fidelidade. Os dados são simulados (ficam no código), então não há servidor
+As 15 telas reproduzem o protótipo de média fidelidade. Os dados são simulados (ficam no código), então não há servidor
 nem banco de dados.
 
 ## Como rodar
@@ -68,7 +68,7 @@ Alternativa sem o túnel do Expo: `npx expo start --tunnel ngrok` usa o ngrok, q
 
 Para facilitar o teste com usuários, existe um menu que não faz parte do app final. Ele abre com **toque longo (cerca de
 1 segundo) no logo "PetConnect"** do catálogo ou no **cabeçalho "ONG ABC"** do painel da ONG. Nele é possível pular para
-qualquer uma das 14 telas e alternar entre a visão do adotante e a da ONG.
+qualquer uma das 15 telas e alternar entre a visão do adotante e a da ONG.
 
 ## Telas e rotas
 
@@ -88,6 +88,7 @@ qualquer uma das 14 telas e alternar entre a visão do adotante e a da ONG.
 | 12 | Cadastro e edição de animal | `/painel/animais/novo` e `/painel/animais/[id]` |
 | 13 | Candidatos | `/painel/candidatos` |
 | 14 | Triagem do candidato | `/painel/candidatos/[id]` |
+| 15 | Chat da ONG (lista e conversa) | `/painel/chat` e `/painel/chat/[threadId]` |
 
 ## O que é interativo
 
@@ -101,6 +102,9 @@ qualquer uma das 14 telas e alternar entre a visão do adotante e a da ONG.
 - **Processos e detalhe:** abas Em andamento e Encerrados, mais uma linha do tempo e a desistência com confirmação.
 - **Chat:** lista de conversas, com respostas rápidas e envio de mensagens digitadas. As mensagens enviadas continuam
   na conversa e aparecem na lista enquanto o app estiver aberto.
+- **Chat da ONG:** a aba Chat da barra inferior abre as conversas com os candidatos, com contador de não lidas (que
+  zera ao abrir a conversa), respostas rápidas por etapa e envio de mensagens digitadas. "Ver triagem" leva à análise do
+  candidato, e a triagem tem o atalho "Abrir chat com o candidato". As mensagens ficam só na memória.
 - **Área da ONG:** abas de animais por status, formulário de animal (com exclusão confirmada), filtro de candidatos e
   triagem com avanço de etapa e recusa com motivo.
 - **Fotos do animal (ONG):** no formulário de animal, "Adicionar" abre a galeria do aparelho ou as ilustrações do
@@ -112,10 +116,10 @@ qualquer uma das 14 telas e alternar entre a visão do adotante e a da ONG.
 ```
 src/
   app/                rotas do Expo Router (um arquivo por tela)
-  components/         Text (fonte Inter), Icons (SVG), Layout (tela, barras, diálogo), ui, Controls e PhotosEditor
+  components/         Text (fonte Inter), Icons (SVG), Layout (tela, barras, diálogo), ui, Controls, PhotosEditor e Conversation (chat)
   data/               dados simulados (animais e ONGs, conversas, candidatos, processos), o estado do chat e images.ts (fotos)
   theme/colors.ts     paleta do protótipo
-  routes.ts           lista das 14 telas usada pelo menu do protótipo
+  routes.ts           lista das 15 telas usada pelo menu do protótipo
 assets/               ícone, ícone adaptativo, tela de abertura, animais/ e ongs/ (ilustrações)
 docs/                 documentação extra (fotos e imagens)
 ```

@@ -19,7 +19,7 @@ const GROUPS: { area: Area; title: string }[] = [
 ];
 
 /**
- * Menu de apoio ao teste do protótipo: salta direto para qualquer uma das 14 telas
+ * Menu de apoio ao teste do protótipo: salta direto para qualquer uma das 15 telas
  * e alterna entre a visão do adotante e a da ONG. Abre com toque longo no logo
  * "PetConnect" (catálogo) ou no cabeçalho do painel da ONG.
  */

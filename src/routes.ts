@@ -1,4 +1,4 @@
-// Lista das 14 telas do protótipo. Alimenta o menu do protótipo (toque longo no logo).
+// Lista das 15 telas do protótipo. Alimenta o menu do protótipo (toque longo no logo).
 
 export type Area = 'adotante' | 'ong';
 
@@ -25,4 +25,5 @@ export const screens: ScreenInfo[] = [
   { n: '12', title: 'Cadastro e edição de animal', area: 'ong', to: '/painel/animais/skye' },
   { n: '13', title: 'Candidatos', area: 'ong', to: '/painel/candidatos' },
   { n: '14', title: 'Triagem do candidato', area: 'ong', to: '/painel/candidatos/augusto' },
+  { n: '15', title: 'Chat da ONG', area: 'ong', to: '/painel/chat' },
 ];

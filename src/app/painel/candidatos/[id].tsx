@@ -42,7 +42,7 @@ function TriagemBody({ candidate }: { candidate: Candidate }) {
               {candidate.city} · {candidate.age} anos
             </T>
           </View>
-          <RoundButton label="Abrir chat com o candidato" href="/chat">
+          <RoundButton label="Abrir chat com o candidato" href={`/painel/chat/${candidate.id}`}>
             <IconChat size={20} color={colors.navy} />
           </RoundButton>
         </View>
