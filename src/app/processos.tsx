@@ -4,6 +4,7 @@ import { IconChat } from '../components/Icons';
 import { BottomNav, Screen } from '../components/Layout';
 import { T } from '../components/Text';
 import { Photo, Pill, RoundButton, Segmented, Tap, card, textStyles } from '../components/ui';
+import { petPhoto, usePhotosRevision } from '../data/images';
 import { processes } from '../data/ong';
 import { colors } from '../theme/colors';
 
@@ -16,6 +17,7 @@ type TabId = (typeof TABS)[number]['id'];
 
 /** Tela 07 · Meus processos. */
 export default function Processos() {
+  usePhotosRevision(); // atualiza quando a ONG troca as fotos
   const [tab, setTab] = useState<TabId>('andamento');
   const list = processes.filter((p) => p.closed === (tab === 'encerrados'));
 
@@ -36,7 +38,7 @@ export default function Processos() {
               label={`${p.name}, ${p.status}`}
               style={{ flex: 1, minWidth: 0, flexDirection: 'row', alignItems: 'center', gap: 12 }}
             >
-              <Photo style={{ width: 64, height: 64, borderRadius: 10 }} />
+              <Photo source={petPhoto(p.animalId)} alt={`Ilustração de ${p.name}`} style={{ width: 64, height: 64, borderRadius: 10 }} />
               <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
                 <T style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>
                   {p.name} <T style={{ fontSize: 13, fontWeight: '500', color: colors.muted }}>· {p.meta}</T>

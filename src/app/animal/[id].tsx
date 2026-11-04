@@ -1,15 +1,14 @@
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Image, Pressable, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconChevronRight, IconVerified } from '../../components/Icons';
 import { BackButton, Footer, Screen } from '../../components/Layout';
 import { T } from '../../components/Text';
 import { Button, Photo, Tag, Tap, card, lh, textStyles } from '../../components/ui';
 import { animalMeta, getAnimal, ongs } from '../../data/animals';
+import { ongLogos, usePetPhotos } from '../../data/images';
 import { colors } from '../../theme/colors';
-
-const PHOTO_COUNT = 4;
 
 /** Tela 02 · Perfil do animal. */
 export default function Animal() {
@@ -17,14 +16,23 @@ export default function Animal() {
   const insets = useSafeAreaInsets();
   const [photo, setPhoto] = useState(0);
   const animal = getAnimal(id);
+  const photos = usePetPhotos(animal?.id);
   if (!animal) return <Redirect href="/" />;
   const ong = ongs[animal.ongId];
+  const count = Math.max(photos.length, 1);
+  const current = Math.min(photo, count - 1); // a ONG pode ter removido fotos
 
   return (
     <Screen topInset={false}>
       <ScrollView style={{ flex: 1 }}>
         <View>
-          <Photo style={{ height: 240 + insets.top, paddingTop: insets.top, fontSize: 14 }}>Foto do animal</Photo>
+          <Photo
+            source={photos[current]}
+            alt={`Foto ${current + 1} de ${count} de ${animal.name}`}
+            style={{ height: 240 + insets.top, paddingTop: insets.top, fontSize: 14 }}
+          >
+            Foto do animal
+          </Photo>
           <View style={{ position: 'absolute', top: 12 + insets.top, left: 12 }}>
             <BackButton fallback="/" floating />
           </View>
@@ -40,27 +48,32 @@ export default function Animal() {
             }}
           >
             <T style={{ fontSize: 12, fontWeight: '600', color: colors.white }}>
-              {photo + 1} / {PHOTO_COUNT}
+              {current + 1} / {count}
             </T>
           </View>
         </View>
         <View style={{ flexDirection: 'row', gap: 8, paddingTop: 10, paddingHorizontal: 16 }}>
-          {Array.from({ length: PHOTO_COUNT }, (_, i) => (
+          {Array.from({ length: count }, (_, i) => (
             <Pressable
               key={i}
               accessibilityRole="button"
               accessibilityLabel={`Ver foto ${i + 1}`}
-              aria-selected={photo === i}
+              aria-selected={current === i}
               onPress={() => setPhoto(i)}
               style={{
                 flex: 1,
                 height: 44,
                 borderRadius: 8,
                 borderWidth: 2,
+                overflow: 'hidden',
                 backgroundColor: colors.photo,
-                borderColor: photo === i ? colors.navy : 'transparent',
+                borderColor: current === i ? colors.navy : 'transparent',
               }}
-            />
+            >
+              {photos[i] ? (
+                <Image source={photos[i]} resizeMode="cover" accessibilityIgnoresInvertColors style={{ width: '100%', height: '100%' }} />
+              ) : null}
+            </Pressable>
           ))}
         </View>
 
@@ -113,7 +126,13 @@ export default function Animal() {
             label={`Ver perfil da ${ong.name}`}
             style={[card, { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12 }]}
           >
-            <Photo style={{ width: 48, height: 48, borderRadius: 24, fontSize: 11 }}>Logo</Photo>
+            <Photo
+              source={ongLogos[ong.id]}
+              alt={`Logo da ${ong.name}`}
+              style={{ width: 48, height: 48, borderRadius: 24, fontSize: 11 }}
+            >
+              Logo
+            </Photo>
             <View style={{ flex: 1, gap: 2 }}>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
                 <T style={{ fontSize: 15, fontWeight: '700', color: colors.ink }}>{ong.name}</T>

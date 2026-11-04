@@ -4,6 +4,7 @@ import { BottomNav, Screen } from '../../components/Layout';
 import { T } from '../../components/Text';
 import { Photo, Tap, textStyles } from '../../components/ui';
 import { ongs } from '../../data/animals';
+import { ongLogos } from '../../data/images';
 import { threads } from '../../data/chat';
 import { useSentMessages } from '../../data/store';
 import { colors } from '../../theme/colors';
@@ -28,7 +29,9 @@ function Row({ thread }: { thread: Thread }) {
         backgroundColor: colors.white,
       }}
     >
-      <Photo style={{ width: 48, height: 48, borderRadius: 24, fontSize: 11 }}>Logo</Photo>
+      <Photo source={ongLogos[thread.ongId]} alt={`Logo da ${ong.name}`} style={{ width: 48, height: 48, borderRadius: 24, fontSize: 11 }}>
+        Logo
+      </Photo>
       <View style={{ flex: 1, minWidth: 0, gap: 3 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, flexShrink: 1 }}>

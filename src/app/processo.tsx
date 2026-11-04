@@ -5,6 +5,7 @@ import { IconChat } from '../components/Icons';
 import { Dialog, Footer, Screen, TopBar } from '../components/Layout';
 import { T } from '../components/Text';
 import { Button, LinkText, Photo, Pill, RoundButton, card, lh, textStyles } from '../components/ui';
+import { petPhoto, usePhotosRevision } from '../data/images';
 import { colors } from '../theme/colors';
 
 type StepState = 'done' | 'now' | 'todo';
@@ -19,6 +20,7 @@ const STEPS: { title: string; when: string; state: StepState }[] = [
 
 /** Tela 08 · Detalhe do processo. */
 export default function Processo() {
+  usePhotosRevision(); // atualiza quando a ONG troca as fotos
   const router = useRouter();
   const [giveUp, setGiveUp] = useState(false);
 
@@ -28,7 +30,7 @@ export default function Processo() {
 
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, gap: 20 }}>
         <View style={[card, { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12 }]}>
-          <Photo style={{ width: 64, height: 64, borderRadius: 10 }} />
+          <Photo source={petPhoto('skye')} alt="Ilustração de Skye" style={{ width: 64, height: 64, borderRadius: 10 }} />
           <View style={{ flex: 1, gap: 4 }}>
             <T style={{ fontSize: 17, fontWeight: '700', color: colors.ink }}>Skye</T>
             <T style={textStyles.muted}>Cão · Fêmea · ONG ABC</T>

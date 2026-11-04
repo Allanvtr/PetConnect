@@ -7,6 +7,7 @@ import { Footer, Screen, TopBar } from '../../components/Layout';
 import { T } from '../../components/Text';
 import { Button, Photo, card, lh, textStyles } from '../../components/ui';
 import { ongs } from '../../data/animals';
+import { ongLogos } from '../../data/images';
 import { colors } from '../../theme/colors';
 
 const iconBtn = { width: 44, height: 44, alignItems: 'center', justifyContent: 'center' } as const;
@@ -50,7 +51,9 @@ export default function Ong() {
 
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16, gap: 18 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 14 }}>
-          <Photo style={{ width: 64, height: 64, borderRadius: 32 }}>Logo</Photo>
+          <Photo source={ongLogos[ong.id]} alt={`Logo da ${ong.name}`} style={{ width: 64, height: 64, borderRadius: 32 }}>
+            Logo
+          </Photo>
           <View style={{ flex: 1, gap: 6 }}>
             <T style={{ fontSize: 22, fontWeight: '700', letterSpacing: -0.22, color: colors.ink }}>{ong.name}</T>
             <View

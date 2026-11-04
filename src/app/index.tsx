@@ -6,6 +6,7 @@ import { useProtoMenu } from '../components/ProtoMenu';
 import { T } from '../components/Text';
 import { Chip, ChipRow, LinkText, Photo, SearchBox, Tag, Tap, card } from '../components/ui';
 import { animalMeta, animals, ongs } from '../data/animals';
+import { petPhoto, usePhotosRevision } from '../data/images';
 import { colors } from '../theme/colors';
 
 const CHIPS = [
@@ -18,6 +19,7 @@ const CHIPS = [
 
 /** Tela 01 · Catálogo de animais. */
 export default function Catalogo() {
+  usePhotosRevision(); // atualiza quando a ONG troca as fotos
   const [sel, setSel] = useState<Record<string, boolean>>({});
   const [query, setQuery] = useState('');
   const openMenu = useProtoMenu();
@@ -112,7 +114,7 @@ export default function Catalogo() {
               label={`${a.name}, ${animalMeta(a)}, ${ong.name}`}
               style={[card, { width: cardWidth, overflow: 'hidden', backgroundColor: colors.white }]}
             >
-              <Photo style={{ height: 120, fontSize: 13 }} />
+              <Photo source={petPhoto(a.id)} alt={`Ilustração de ${a.name}`} style={{ height: 120, fontSize: 13 }} />
               <View style={{ padding: 10, gap: 6 }}>
                 <T style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{a.name}</T>
                 <T style={{ fontSize: 13, color: colors.muted }}>{animalMeta(a)}</T>

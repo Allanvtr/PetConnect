@@ -7,6 +7,7 @@ import { Footer, Screen, TopBar } from '../../components/Layout';
 import { T } from '../../components/Text';
 import { Button, Field, Input, LinkText, Photo, card, lh, textStyles } from '../../components/ui';
 import { animalMeta, getAnimal, ongs } from '../../data/animals';
+import { petPhoto, usePhotosRevision } from '../../data/images';
 import { colors } from '../../theme/colors';
 
 const STEPS = [
@@ -17,6 +18,7 @@ const STEPS = [
 
 /** Tela 06 · Confirmar interesse (e estado de sucesso). */
 export default function Confirmar() {
+  usePhotosRevision(); // atualiza quando a ONG troca as fotos
   const { id } = useLocalSearchParams<{ id: string }>();
   const [sent, setSent] = useState(false);
   const [shareCity, setShareCity] = useState(true);
@@ -104,7 +106,7 @@ export default function Confirmar() {
         keyboardShouldPersistTaps="handled"
       >
         <View style={[card, { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12 }]}>
-          <Photo style={{ width: 64, height: 64, borderRadius: 10 }} />
+          <Photo source={petPhoto(animal.id)} alt={`Ilustração de ${animal.name}`} style={{ width: 64, height: 64, borderRadius: 10 }} />
           <View style={{ flex: 1, gap: 3 }}>
             <T style={{ fontSize: 17, fontWeight: '700', color: colors.ink }}>{animal.name}</T>
             <T style={textStyles.muted}>{animalMeta(animal)}</T>

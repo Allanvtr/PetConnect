@@ -13,6 +13,9 @@ Requer Node 22.13 ou mais recente e o aplicativo **Expo Go** no celular (Play St
 npm install
 ```
 
+Se o projeto for atualizado (por exemplo, com uma dependência nova como o `expo-image-picker`), rode `npm install` de
+novo antes de iniciar.
+
 ### Na mesma rede Wi-Fi (casa, hotspot do celular)
 
 Com o celular e o computador na mesma rede:
@@ -56,6 +59,11 @@ Alternativa sem o túnel do Expo: `npx expo start --tunnel ngrok` usa o ngrok, q
 
 - Conferir os tipos: `npm run typecheck`.
 
+## Documentação
+
+- [`docs/fotos.md`](docs/fotos.md): onde ficam as imagens, como a ONG troca as fotos de um animal e como substituir as
+  ilustrações por fotos reais.
+
 ## Menu do protótipo
 
 Para facilitar o teste com usuários, existe um menu que não faz parte do app final. Ele abre com **toque longo (cerca de
@@ -95,24 +103,29 @@ qualquer uma das 14 telas e alternar entre a visão do adotante e a da ONG.
   na conversa e aparecem na lista enquanto o app estiver aberto.
 - **Área da ONG:** abas de animais por status, formulário de animal (com exclusão confirmada), filtro de candidatos e
   triagem com avanço de etapa e recusa com motivo.
+- **Fotos do animal (ONG):** no formulário de animal, "Adicionar" abre a galeria do aparelho ou as ilustrações do
+  protótipo (até 6 fotos). Tocar numa foto permite torná-la principal ou removê-la, e a mudança aparece no catálogo e
+  nas demais telas enquanto o app estiver aberto. Detalhes em [`docs/fotos.md`](docs/fotos.md).
 
 ## Estrutura
 
 ```
 src/
   app/                rotas do Expo Router (um arquivo por tela)
-  components/         Text (fonte Inter), Icons (SVG), Layout (tela, barras, diálogo), ui e Controls
-  data/               dados simulados (animais e ONGs, conversas, candidatos, processos) e o estado do chat
+  components/         Text (fonte Inter), Icons (SVG), Layout (tela, barras, diálogo), ui, Controls e PhotosEditor
+  data/               dados simulados (animais e ONGs, conversas, candidatos, processos), o estado do chat e images.ts (fotos)
   theme/colors.ts     paleta do protótipo
   routes.ts           lista das 14 telas usada pelo menu do protótipo
-assets/               ícone, ícone adaptativo e tela de abertura
+assets/               ícone, ícone adaptativo, tela de abertura, animais/ e ongs/ (ilustrações)
+docs/                 documentação extra (fotos e imagens)
 ```
 
 ## Decisões de fidelidade
 
 - Mesmas cores e proporções do protótipo de média fidelidade, com os mesmos textos. O azul-petróleo `#2F4B73` é a única
   cor de destaque e a fonte Inter vem embarcada no app (funciona sem internet).
-- Fotos continuam como blocos cinza rotulados, como no protótipo; o mapa da ONG também é um espaço reservado.
+- As fotos dos animais e as logos das ONGs são ilustrações originais. Os avatares dos candidatos e o mapa da ONG
+  continuam como espaços reservados, como no protótipo. Para usar fotos reais, veja [`docs/fotos.md`](docs/fotos.md).
 - Adaptações próprias do celular: respeito às áreas seguras (notch e barra de gestos), teclado que empurra o conteúdo,
   voltar pelo gesto ou pelo botão do sistema, alvos de toque de 44 px e listas de escolha em folha inferior no lugar do
   seletor do navegador.

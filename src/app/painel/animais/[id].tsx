@@ -2,10 +2,12 @@ import { Redirect, useLocalSearchParams, useRouter } from 'expo-router';
 import { useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { CheckRow, Option } from '../../../components/Controls';
-import { IconPlus } from '../../../components/Icons';
 import { Dialog, Screen, TopBar } from '../../../components/Layout';
+import { PhotosEditor, toItems } from '../../../components/PhotosEditor';
+import type { PhotoItem } from '../../../components/PhotosEditor';
 import { T } from '../../../components/Text';
-import { Button, Chip, Field, Input, LinkText, Photo, Select, lh, textStyles } from '../../../components/ui';
+import { Button, Chip, Field, Input, LinkText, Select, lh, textStyles } from '../../../components/ui';
+import { getPetPhotos, setPetPhotos } from '../../../data/images';
 import { getOngPet } from '../../../data/ong';
 import type { OngPet } from '../../../data/ong';
 import { colors } from '../../../theme/colors';
@@ -36,8 +38,23 @@ function FormBody({ pet }: { pet?: OngPet }) {
     verm: pet?.verm ?? false,
   });
   const [confirming, setConfirming] = useState(false);
+  const [photos, setPhotos] = useState<PhotoItem[]>(() => toItems(getPetPhotos(pet?.id)));
+  const [photoError, setPhotoError] = useState<string>();
   const isNew = !pet;
   const back = () => router.navigate('/painel/animais');
+  const changePhotos = (next: PhotoItem[]) => {
+    setPhotos(next);
+    setPhotoError(undefined);
+  };
+  /** Grava as fotos no animal (se já existe) e volta para a lista. */
+  const save = (publish: boolean) => {
+    if (publish && photos.length === 0) {
+      setPhotoError('Adicione ao menos uma foto para publicar.');
+      return;
+    }
+    if (pet) setPetPhotos(pet.id, photos.map((p) => p.source));
+    back();
+  };
 
   return (
     <Screen keyboard>
@@ -48,29 +65,7 @@ function FormBody({ pet }: { pet?: OngPet }) {
         contentContainerStyle={{ padding: 16, gap: 18 }}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={{ gap: 8 }}>
-          <T style={textStyles.lbl}>Fotos</T>
-          <View style={{ flexDirection: 'row', gap: 8 }}>
-            <View
-              style={{
-                flex: 1,
-                height: 88,
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 2,
-                borderRadius: 10,
-                borderWidth: 2,
-                borderStyle: 'dashed',
-                borderColor: colors.placeholder,
-              }}
-            >
-              <IconPlus size={22} color={colors.navy} />
-              <T style={{ fontSize: 12, fontWeight: '600', color: colors.navy }}>Adicionar</T>
-            </View>
-            <Photo style={{ flex: 1, height: 88, borderRadius: 10 }}>{isNew ? 'Foto 1' : 'Principal'}</Photo>
-            <Photo style={{ flex: 1, height: 88, borderRadius: 10 }}>Foto 2</Photo>
-          </View>
-        </View>
+        <PhotosEditor photos={photos} onChange={changePhotos} error={photoError} />
 
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
           <Field label="Nome" style={half}>
@@ -163,8 +158,8 @@ function FormBody({ pet }: { pet?: OngPet }) {
         }}
       >
         <View style={{ flexDirection: 'row', gap: 8 }}>
-          <Button label="Salvar rascunho" variant="outline" height={48} fontSize={15} onPress={back} style={{ flex: 1 }} />
-          <Button label="Publicar" height={48} fontSize={15} onPress={back} style={{ flex: 1 }} />
+          <Button label="Salvar rascunho" variant="outline" height={48} fontSize={15} onPress={() => save(false)} style={{ flex: 1 }} />
+          <Button label="Publicar" height={48} fontSize={15} onPress={() => save(true)} style={{ flex: 1 }} />
         </View>
         {!isNew && (
           <LinkText

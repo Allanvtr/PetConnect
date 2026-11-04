@@ -4,6 +4,7 @@ import { BottomNav, Screen } from '../../components/Layout';
 import { useProtoMenu } from '../../components/ProtoMenu';
 import { T } from '../../components/Text';
 import { Button, LinkText, Photo, Pill, Tap, card, textStyles } from '../../components/ui';
+import { ongLogos } from '../../data/images';
 import { candidates } from '../../data/ong';
 import { colors } from '../../theme/colors';
 
@@ -27,7 +28,9 @@ export default function OngPainel() {
         accessibilityHint="Toque longo abre o menu do protótipo"
         style={{ paddingTop: 20, paddingHorizontal: 16, paddingBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 12 }}
       >
-        <Photo style={{ width: 48, height: 48, borderRadius: 24, fontSize: 11 }}>Logo</Photo>
+        <Photo source={ongLogos.abc} alt="Logo da ONG ABC" style={{ width: 48, height: 48, borderRadius: 24, fontSize: 11 }}>
+          Logo
+        </Photo>
         <View style={{ flex: 1, gap: 2 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
             <T style={{ fontSize: 20, fontWeight: '700', letterSpacing: -0.2, color: colors.ink }}>ONG ABC</T>

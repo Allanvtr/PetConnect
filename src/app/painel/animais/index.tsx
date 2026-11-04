@@ -5,6 +5,7 @@ import { BottomNav, Screen } from '../../../components/Layout';
 import { T } from '../../../components/Text';
 import { Button, Photo, RoundButton, Segmented, card, textStyles } from '../../../components/ui';
 import { useRouter } from 'expo-router';
+import { petPhoto, usePhotosRevision } from '../../../data/images';
 import { ongPetMeta, ongPets } from '../../../data/ong';
 import type { PetStatus } from '../../../data/ong';
 import { colors } from '../../../theme/colors';
@@ -17,6 +18,7 @@ const TABS: { id: PetStatus; label: string }[] = [
 
 /** Tela 11 · Animais da ONG. */
 export default function OngAnimais() {
+  usePhotosRevision(); // atualiza quando a ONG troca as fotos
   const router = useRouter();
   const [tab, setTab] = useState<PetStatus>('disponivel');
   const list = ongPets.filter((p) => p.status === tab);
@@ -33,7 +35,7 @@ export default function OngAnimais() {
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 12, gap: 10 }}>
         {list.map((p) => (
           <View key={p.id} style={[card, { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 10 }]}>
-            <Photo style={{ width: 60, height: 60, borderRadius: 10, fontSize: 11 }} />
+            <Photo source={petPhoto(p.id)} alt={`Ilustração de ${p.name}`} style={{ width: 60, height: 60, borderRadius: 10, fontSize: 11 }} />
             <View style={{ flex: 1, minWidth: 0, gap: 4 }}>
               <T style={{ fontSize: 16, fontWeight: '700', color: colors.ink }}>{p.name}</T>
               <T style={textStyles.muted}>{ongPetMeta(p)}</T>

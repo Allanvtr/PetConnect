@@ -1,8 +1,8 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import type { ReactNode } from 'react';
-import { Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
-import type { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, TextInput, View } from 'react-native';
+import type { ImageSourcePropType, StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import { colors } from '../theme/colors';
 import { Dialog } from './Layout';
 import { IconChevronDown, IconSearch } from './Icons';
@@ -193,18 +193,43 @@ export function Tap({
 
 /* ------------------------------------------------------ Fotos, selos, tags */
 
-/** Espaço reservado para fotos (o protótipo usa blocos cinza rotulados). */
+/**
+ * Foto do animal ou da ONG. Sem `source`, mostra o bloco cinza rotulado do protótipo
+ * de média fidelidade (usado onde ainda não há imagem).
+ */
 export function Photo({
   children = 'Foto',
   style,
+  source,
+  alt,
 }: {
   children?: ReactNode;
   style?: ViewStyle & { fontSize?: number };
+  source?: ImageSourcePropType;
+  /** Descrição da imagem para leitores de tela. */
+  alt?: string;
 }) {
   const { fontSize = 12, ...box } = style ?? {};
   return (
-    <View style={[{ backgroundColor: colors.photo, alignItems: 'center', justifyContent: 'center' }, box]}>
-      {children ? <T style={{ fontSize, color: colors.muted }}>{children}</T> : null}
+    <View
+      style={[
+        { backgroundColor: colors.photo, alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
+        box,
+      ]}
+    >
+      {source ? (
+        <Image
+          source={source}
+          accessible={!!alt}
+          accessibilityLabel={alt}
+          accessibilityIgnoresInvertColors
+          resizeMode="cover"
+          // Largura e altura explícitas: a imagem local traz o tamanho original como padrão.
+          style={[StyleSheet.absoluteFill, { width: '100%', height: '100%' }]}
+        />
+      ) : children ? (
+        <T style={{ fontSize, color: colors.muted }}>{children}</T>
+      ) : null}
     </View>
   );
 }
