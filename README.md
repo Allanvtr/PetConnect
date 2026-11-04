@@ -61,14 +61,23 @@ Alternativa sem o túnel do Expo: `npx expo start --tunnel ngrok` usa o ngrok, q
 
 ## Documentação
 
+- [`docs/visoes.md`](docs/visoes.md): como trocar entre a visão do adotante e a da ONG, passo a passo.
 - [`docs/fotos.md`](docs/fotos.md): onde ficam as imagens, como a ONG troca as fotos de um animal e como substituir as
   ilustrações por fotos reais.
 
 ## Menu do protótipo
 
-Para facilitar o teste com usuários, existe um menu que não faz parte do app final. Ele abre com **toque longo (cerca de
-1 segundo) no logo "PetConnect"** do catálogo ou no **cabeçalho "ONG ABC"** do painel da ONG. Nele é possível pular para
+Para facilitar o teste com usuários, existe um menu que não faz parte do app final. Nele é possível pular para
 qualquer uma das 15 telas e alternar entre a visão do adotante e a da ONG.
+
+**Para trocar de visão:**
+
+- **Adotante → ONG:** no Catálogo (aba Início), segure o dedo sobre o logo **"PetConnect"** por cerca de 1 segundo e,
+  em **Visão da ONG**, toque em **10 Painel da ONG**.
+- **ONG → adotante:** no Painel (aba Painel), segure o dedo sobre o cabeçalho **"ONG ABC"** por cerca de 1 segundo e,
+  em **Visão do adotante**, toque em **01 Catálogo**.
+
+O menu só abre nesses dois pontos. Passo a passo completo em [`docs/visoes.md`](docs/visoes.md).
 
 ## Telas e rotas
 
